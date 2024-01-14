@@ -120,6 +120,9 @@ importers:
       '@polkadot-api/client':
         specifier: workspace:*
         version: link:../packages/client
+      '@polkadot-api/json-rpc-provider-proxy':
+        specifier: workspace:*
+        version: link:../packages/json-rpc-provider-proxy
       '@polkadot-api/metadata-builders':
         specifier: workspace:*
         version: link:../packages/metadata-builders
@@ -144,6 +147,9 @@ importers:
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
+      smoldot:
+        specifier: ^2.0.16
+        version: 2.0.16
     devDependencies:
       '@types/node':
         specifier: ^20.4.7

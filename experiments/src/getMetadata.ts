@@ -10,6 +10,7 @@ import {
   CodecType,
   Tuple,
 } from "@polkadot-api/substrate-bindings"
+import { withLogsProvider } from "./logger"
 
 const scProvider = getScProvider()
 
@@ -21,24 +22,9 @@ const smProvider = scProvider(
 }*/,
 ).relayChain
 
-const withLogsProvider = (input: ConnectProvider): ConnectProvider => {
-  return (onMsg) => {
-    const result = input((msg) => {
-      console.log("<< " + msg)
-      onMsg(msg)
-    })
-
-    return {
-      ...result,
-      send: (msg) => {
-        console.log(">> " + msg)
-        result.send(msg)
-      },
-    }
-  }
-}
-
-export const { chainHead } = createClient(withLogsProvider(smProvider))
+export const { chainHead } = createClient(
+  withLogsProvider(console.log, smProvider),
+)
 
 type Metadata = CodecType<typeof metadata>
 

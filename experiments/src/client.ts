@@ -1,14 +1,51 @@
-import { getScProvider, WellKnownChain } from "@polkadot-api/sc-provider"
+import { appendFileSync, existsSync, rmSync } from "fs"
 import { noop } from "@polkadot-api/utils"
 import { getChain } from "@polkadot-api/node-polkadot-provider"
 import { createClient } from "@polkadot-api/client"
-
 // hint: remember to run the `codegen` script
 import ksm, { Queries } from "./descriptors/ksm"
-const scProvider = getScProvider()
+import { start } from "smoldot"
+import { getSmoldotProvider } from "./smoldot-provider"
+import { withLogsProvider } from "./logger"
+import chainSpec from "./ksm"
+
+const getProviderLogs = (id: number) => {
+  const WIRE_FILE = `wire-logs-${id}.txt`
+  if (existsSync(WIRE_FILE)) rmSync(WIRE_FILE)
+
+  return (message: string) => {
+    appendFileSync(WIRE_FILE, `${message}\n`)
+  }
+}
+
+let tickDate = ""
+const setTickDate = () => {
+  tickDate = new Date().toISOString()
+  setTimeout(setTickDate, 0)
+}
+setTickDate()
+
+const SMOLDOT_LOGS_FILE = "smoldot-logs.txt"
+if (existsSync(SMOLDOT_LOGS_FILE)) rmSync(SMOLDOT_LOGS_FILE)
+const appendSmlog = (level: number, target: string, message: string) => {
+  appendFileSync(
+    SMOLDOT_LOGS_FILE,
+    `${tickDate} (${level})${target}\n${message}\n\n`,
+  )
+}
+
+export const smoldot = start({
+  maxLogLevel: 9,
+  logCallback: appendSmlog,
+})
+
+const provider = withLogsProvider(
+  getProviderLogs,
+  getSmoldotProvider(smoldot, chainSpec),
+)
 
 const polkadotChain = await getChain({
-  provider: scProvider(WellKnownChain.ksmcc3).relayChain,
+  provider,
   keyring: { getPairs: () => [], onKeyPairsChanged: () => noop },
 })
 

@@ -26,14 +26,16 @@
     "@noble/curves": "^1.2.0",
     "@polkadot-api/cli": "workspace:*",
     "@polkadot-api/client": "workspace:*",
+    "@polkadot-api/json-rpc-provider-proxy": "workspace:*",
+    "@polkadot-api/metadata-builders": "workspace:*",
     "@polkadot-api/node-polkadot-provider": "workspace:*",
     "@polkadot-api/sc-provider": "workspace:*",
     "@polkadot-api/substrate-bindings": "workspace:*",
     "@polkadot-api/substrate-client": "workspace:*",
-    "@polkadot-api/metadata-builders": "workspace:*",
     "@polkadot-api/tx-helper": "workspace:*",
     "@polkadot-api/utils": "workspace:*",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "smoldot": "^2.0.16"
   },
   "prettier": {
     "printWidth": 80,
