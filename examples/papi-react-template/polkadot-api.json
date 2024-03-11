@@ -1,0 +1,12 @@
+{
+  "wnd": {
+    "outputFolder": "src/codegen",
+    "chain": "westend2",
+    "metadata": "wnd.scale"
+  },
+  "wnd-assethub": {
+    "outputFolder": "src/codegen",
+    "wsUrl": "wss://westend-asset-hub-rpc.polkadot.io/",
+    "metadata": "wnd-assethub.scale"
+  }
+}
